@@ -9,7 +9,7 @@ import { RouteEntity } from './route.entity';
 import { CarrierEntity } from './carrier.entity';
 
 @Entity(TableName.SHIPPING)
-@Check('"weight" >= 0')
+@Check('"weight" > 0')
 export class ShippingEntity extends BaseEntity implements Shipping {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',
