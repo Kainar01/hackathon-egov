@@ -12,4 +12,8 @@ export enum TableName {
   SHIPPING = 'shipping',
   SHIPPING_ROUTE_GATE = 'shipping_route_gate',
   CARRIER = 'carrier',
+  PARCEL = 'parcel',
+  PARCEL_STATUS = 'parcel_status',
+  PARCEL_GROUP = 'parcel_group',
+  PARCEL_ITEM = 'parcel_item',
 }
