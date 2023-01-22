@@ -16,16 +16,16 @@ export class RouteGateEntity extends BaseEntity implements RouteGate {
   @Column('int')
   routeId!: number;
 
-  @Column('int')
+  @Column('int', { comment: 'Departure gate' })
   gateId!: number;
 
-  @Column('int')
+  @Column('int', { comment: 'Next destination gate' })
   nextGateId!: number;
 
-  @Column('varchar', { nullable: true })
+  @Column('varchar', { nullable: true, comment: 'Time taken between two gates' })
   time!: string | null;
 
-  @Column('varchar', { nullable: true })
+  @Column('varchar', { nullable: true, comment: 'Distance between two gates' })
   distance!: string | null;
 
   @Column('int')

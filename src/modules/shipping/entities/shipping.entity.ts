@@ -22,16 +22,19 @@ export class ShippingEntity extends BaseEntity implements Shipping {
   @Column('int')
   routeId!: number;
 
+  @Column('decimal', { comment: 'Fee per kg in percentage' })
+  fee!: number;
+
   @Column('enum', { enum: ShippingType })
   type!: ShippingType;
 
-  @Column('numeric')
+  @Column('numeric', { comment: 'Total shipping weight in kg' })
   weight!: number;
 
   @ManyToOne(() => CarrierEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
-    deferrable: 'INITIALLY DEFERRED'
+    deferrable: 'INITIALLY DEFERRED',
   })
   @JoinColumn({ name: 'carrierId' })
   carrier?: CarrierEntity;

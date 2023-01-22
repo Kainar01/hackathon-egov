@@ -6,6 +6,7 @@ export interface Shipping extends BaseEntity {
   shippingId: number;
   routeId: number;
   carrierId: number;
+  fee: number;
   type: ShippingType;
   weight: number;
 }

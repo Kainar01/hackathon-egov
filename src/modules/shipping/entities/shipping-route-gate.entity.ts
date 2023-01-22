@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
@@ -8,6 +8,7 @@ import { RouteGateEntity } from './route-gate.entity';
 import { ShippingEntity } from './shipping.entity';
 
 @Entity(TableName.SHIPPING_ROUTE_GATE)
+@Unique(['shippingId', 'routeGateId'])
 export class ShippingRouteGateEntity extends BaseEntity implements ShippingRouteGate {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',

@@ -21,7 +21,7 @@ export class RouteEntity extends BaseEntity implements Route {
   @Column('varchar')
   name!: string;
 
-  @Column('decimal')
+  @Column('decimal', { comment: 'Fee per kg in percentage' })
   fee!: number;
 
   @Column('int', { nullable: true })
@@ -36,7 +36,7 @@ export class RouteEntity extends BaseEntity implements Route {
   })
   @JoinColumn({ name: 'departureDepotId' })
   departureDepot?: DepotEntity;
-  
+
   @ManyToOne(() => DepotEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
