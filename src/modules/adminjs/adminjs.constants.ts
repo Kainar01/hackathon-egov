@@ -6,9 +6,12 @@ import { VerificationEntity } from '@/modules/verification/verification.entity';
 
 import { DepotStaffEntity } from '../depot/entities/depot-staff.entity';
 import { DepotEntity } from '../depot/entities/depot.entity';
+import { CarrierEntity } from '../shipping/entities/carrier.entity';
 import { GateEntity } from '../shipping/entities/gate.entity';
 import { RouteGateEntity } from '../shipping/entities/route-gate.entity';
 import { RouteEntity } from '../shipping/entities/route.entity';
+import { ShippingRouteGateEntity } from '../shipping/entities/shipping-route-gate.entity';
+import { ShippingEntity } from '../shipping/entities/shipping.entity';
 
 export const ADMINJS_RESOURCES = [
   UserEntity,
@@ -21,4 +24,7 @@ export const ADMINJS_RESOURCES = [
   RouteEntity,
   GateEntity,
   RouteGateEntity,
+  ShippingEntity,
+  ShippingRouteGateEntity,
+  CarrierEntity,
 ];
