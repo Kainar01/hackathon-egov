@@ -1,10 +1,11 @@
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
 import { DepotEntity } from '@/modules/depot/entities/depot.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import type { Route } from '../interfaces/route.interface';
 
 @Entity(TableName.ROUTE)
+@Check('"departureDepotId" <> "destinationDepotId"')
 export class RouteEntity extends BaseEntity implements Route {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',

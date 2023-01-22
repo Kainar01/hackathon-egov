@@ -1,11 +1,12 @@
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import type { RouteGate } from '../interfaces/route-gate.interface';
 import { GateEntity } from './gate.entity';
 import { RouteEntity } from './route.entity';
 
 @Entity(TableName.ROUTE_GATE)
+@Check('"gateId" <> "nextGateId"')
 export class RouteGateEntity extends BaseEntity implements RouteGate {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',
