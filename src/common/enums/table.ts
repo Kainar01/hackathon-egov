@@ -9,4 +9,7 @@ export enum TableName {
   ROUTE = 'route',
   GATE = 'gate',
   ROUTE_GATE = 'route_gate',
+  SHIPPING = 'shipping',
+  SHIPPING_ROUTE_GATE = 'shipping_route_gate',
+  CARRIER = 'carrier',
 }
