@@ -40,5 +40,5 @@ export class DepotEntity extends BaseEntity implements Depot {
     onUpdate: 'NO ACTION',
   })
   @JoinColumn({ name: 'cityId' })
-  country?: CityEntity;
+  city?: CityEntity;
 }
