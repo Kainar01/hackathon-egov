@@ -6,6 +6,9 @@ import { VerificationEntity } from '@/modules/verification/verification.entity';
 
 import { DepotStaffEntity } from '../depot/entities/depot-staff.entity';
 import { DepotEntity } from '../depot/entities/depot.entity';
+import { GateEntity } from '../route/entities/gate.entity';
+import { RouteGateEntity } from '../route/entities/route-gate.entity';
+import { RouteEntity } from '../route/entities/route.entity';
 
 export const ADMINJS_RESOURCES = [
   UserEntity,
@@ -15,4 +18,7 @@ export const ADMINJS_RESOURCES = [
   VerificationEntity,
   DepotEntity,
   DepotStaffEntity,
+  RouteEntity,
+  GateEntity,
+  RouteGateEntity,
 ];
