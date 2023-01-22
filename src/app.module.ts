@@ -26,6 +26,7 @@ import { AdminJSModule } from './modules/adminjs/adminjs.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CountryModule } from './modules/country/country.module';
 import { DepotModule } from './modules/depot/depot.module';
+import { ShippingModule } from './modules/shipping/shipping.module';
 import { UserModule } from './modules/user/user.module';
 import { VerificationModule } from './modules/verification/verification.module';
 
@@ -65,6 +66,7 @@ import { VerificationModule } from './modules/verification/verification.module';
     UserModule,
     VerificationModule,
     DepotModule,
+    ShippingModule,
     // Module Router
     // https://docs.nestjs.com/recipes/router-module
     RouterModule.register([]),
