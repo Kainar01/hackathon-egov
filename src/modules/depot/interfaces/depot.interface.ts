@@ -8,5 +8,5 @@ export interface Depot extends BaseEntity {
   lng: number;
   cityId: number;
   buyerFee: number | null;
-  pickup: boolean;
+  allowOrder: boolean;
 }

@@ -1,10 +1,11 @@
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
 import { CityEntity } from '@/modules/country/entities/city.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity,Check, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import type { Depot } from '../interfaces/depot.interface';
 
 @Entity(TableName.DEPOT)
+@Check('"allowOrder" IS FALSE OR "buyerFee" IS NOT NULL')
 export class DepotEntity extends BaseEntity implements Depot {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',
@@ -30,7 +31,7 @@ export class DepotEntity extends BaseEntity implements Depot {
   lng!: number;
 
   @Column('boolean', { default: false })
-  pickup!: boolean;
+  allowOrder!: boolean;
 
   @Column('int', { nullable: true })
   order!: number | null;
