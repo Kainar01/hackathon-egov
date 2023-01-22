@@ -5,4 +5,5 @@ export enum TableName {
   USER_DOCUMENT = 'user_document',
   VERIFICATION = 'verification',
   DEPOT = 'depot',
+  DEPOT_STAFF = 'depot_staff',
 }

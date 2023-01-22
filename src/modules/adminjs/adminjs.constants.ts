@@ -4,6 +4,7 @@ import { UserDocumentEntity } from '@/modules/user/entities/user-document.entity
 import { UserEntity } from '@/modules/user/entities/user.entity';
 import { VerificationEntity } from '@/modules/verification/verification.entity';
 
+import { DepotStaffEntity } from '../depot/entities/depot-staff.entity';
 import { DepotEntity } from '../depot/entities/depot.entity';
 
 export const ADMINJS_RESOURCES = [
@@ -13,4 +14,5 @@ export const ADMINJS_RESOURCES = [
   CityEntity,
   VerificationEntity,
   DepotEntity,
+  DepotStaffEntity,
 ];
