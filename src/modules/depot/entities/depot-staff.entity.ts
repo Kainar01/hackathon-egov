@@ -22,9 +22,6 @@ export class DepotStaffEntity extends BaseEntity implements DepotStaff {
   @Column('enum', { enum: DepotStaffRole })
   role!: DepotStaffRole;
 
-  @Column('varchar')
-  name!: string;
-
   @ManyToOne(() => DepotEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
