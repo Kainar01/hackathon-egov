@@ -4,6 +4,9 @@ import { UserDocumentEntity } from '@/modules/user/entities/user-document.entity
 import { UserEntity } from '@/modules/user/entities/user.entity';
 import { VerificationEntity } from '@/modules/verification/verification.entity';
 
+import { BuyerRequestItemEntity } from '../buyer/entities/buyer-request-item.entity';
+import { BuyerRequestEntity } from '../buyer/entities/buyer-request.entity';
+import { BuyerEntity } from '../buyer/entities/buyer.entity';
 import { DepotCarrierEntity } from '../depot/entities/depot-carrier.entity';
 import { DepotStaffEntity } from '../depot/entities/depot-staff.entity';
 import { DepotEntity } from '../depot/entities/depot.entity';
@@ -37,4 +40,7 @@ export const ADMINJS_RESOURCES = [
   ParcelGroupEntity,
   ParcelStatusEntity,
   ParcelItemEntity,
+  BuyerEntity,
+  BuyerRequestEntity,
+  BuyerRequestItemEntity,
 ];
