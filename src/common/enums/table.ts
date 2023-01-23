@@ -6,6 +6,7 @@ export enum TableName {
   VERIFICATION = 'verification',
   DEPOT = 'depot',
   DEPOT_STAFF = 'depot_staff',
+  DEPOT_CARRIER = 'depot_carrier',
   ROUTE = 'route',
   GATE = 'gate',
   ROUTE_GATE = 'route_gate',

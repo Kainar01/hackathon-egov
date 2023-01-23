@@ -4,6 +4,7 @@ import { UserDocumentEntity } from '@/modules/user/entities/user-document.entity
 import { UserEntity } from '@/modules/user/entities/user.entity';
 import { VerificationEntity } from '@/modules/verification/verification.entity';
 
+import { DepotCarrierEntity } from '../depot/entities/depot-carrier.entity';
 import { DepotStaffEntity } from '../depot/entities/depot-staff.entity';
 import { DepotEntity } from '../depot/entities/depot.entity';
 import { ParcelGroupEntity } from '../depot/entities/parcel-group.entity';
@@ -25,6 +26,7 @@ export const ADMINJS_RESOURCES = [
   VerificationEntity,
   DepotEntity,
   DepotStaffEntity,
+  DepotCarrierEntity,
   RouteEntity,
   GateEntity,
   RouteGateEntity,
