@@ -1,6 +1,6 @@
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
-import { CountryEntity } from '@/modules/country/entities/coutry.entity';
+import { CountryEntity } from '@/modules/address/entities/coutry.entity';
 import { DepotEntity } from '@/modules/depot/entities/depot.entity';
 import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import type { Gate } from '../interfaces/gate.interface';

@@ -1,6 +1,7 @@
 export enum TableName {
   CITY = 'city',
   COUNTRY = 'country',
+  ADDRESS = 'address',
   USER = 'user',
   USER_DOCUMENT = 'user_document',
   VERIFICATION = 'verification',

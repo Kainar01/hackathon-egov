@@ -22,10 +22,10 @@ import { DbConfig } from './config/db.config';
 import { RedisConfig } from './config/redis.config';
 import { SentryConfig } from './config/sentry.config';
 import { ServerConfig } from './config/server.config';
+import { AddressModule } from './modules/address/address.module';
 import { AdminJSModule } from './modules/adminjs/adminjs.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BuyerModule } from './modules/buyer/buyer.module';
-import { CountryModule } from './modules/country/country.module';
 import { DepotModule } from './modules/depot/depot.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
 import { UserModule } from './modules/user/user.module';
@@ -62,7 +62,7 @@ import { VerificationModule } from './modules/verification/verification.module';
     // Service Modules
     CommonModule, // Global
     AdminJSModule,
-    CountryModule,
+    AddressModule,
     AuthModule,
     UserModule,
     VerificationModule,
