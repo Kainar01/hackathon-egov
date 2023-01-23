@@ -17,4 +17,6 @@ export enum TableName {
   PARCEL_STATUS = 'parcel_status',
   PARCEL_GROUP = 'parcel_group',
   PARCEL_ITEM = 'parcel_item',
+  BUYER_REQUEST = 'buyer_request',
+  BUYER_REQUEST_ITEM = 'buyer_request_item',
 }

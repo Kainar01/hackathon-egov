@@ -24,6 +24,7 @@ import { SentryConfig } from './config/sentry.config';
 import { ServerConfig } from './config/server.config';
 import { AdminJSModule } from './modules/adminjs/adminjs.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { BuyerModule } from './modules/buyer/buyer.module';
 import { CountryModule } from './modules/country/country.module';
 import { DepotModule } from './modules/depot/depot.module';
 import { ShippingModule } from './modules/shipping/shipping.module';
@@ -67,6 +68,7 @@ import { VerificationModule } from './modules/verification/verification.module';
     VerificationModule,
     DepotModule,
     ShippingModule,
+    BuyerModule,
     // Module Router
     // https://docs.nestjs.com/recipes/router-module
     RouterModule.register([]),
