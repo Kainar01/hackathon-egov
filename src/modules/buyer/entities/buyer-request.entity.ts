@@ -5,6 +5,7 @@ import { UserEntity } from '@/modules/user/entities/user.entity';
 import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BuyerRequestStatus } from '../enums/buyer-request.enum';
 import type { BuyerRequest } from '../interfaces/buyer-request.interface';
+import { BuyerEntity } from './buyer.entity';
 
 @Entity(TableName.BUYER_REQUEST)
 @Check('"total" >= 0')
@@ -19,6 +20,9 @@ export class BuyerRequestEntity extends BaseEntity implements BuyerRequest {
 
   @Column('int')
   userId!: number;
+
+  @Column('int', { nullable: true })
+  buyerId!: number | null;
 
   @Column('enum', { enum: BuyerRequestStatus })
   status!: BuyerRequestStatus;
@@ -42,4 +46,12 @@ export class BuyerRequestEntity extends BaseEntity implements BuyerRequest {
   })
   @JoinColumn({ name: 'userId' })
   user?: UserEntity;
+
+  @ManyToOne(() => BuyerEntity, {
+    onDelete: 'CASCADE',
+    onUpdate: 'NO ACTION',
+    deferrable: 'INITIALLY DEFERRED',
+  })
+  @JoinColumn({ name: 'buyerId' })
+  buyer?: BuyerEntity;
 }

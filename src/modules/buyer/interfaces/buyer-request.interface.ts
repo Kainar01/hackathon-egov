@@ -6,6 +6,7 @@ export interface BuyerRequest extends BaseEntity {
   buyerRequestId: number;
   userId: number;
   depotId: number;
+  buyerId: number | null;
   total: number;
   status: BuyerRequestStatus;
   comment: string | null;
