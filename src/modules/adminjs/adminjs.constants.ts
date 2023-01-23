@@ -1,9 +1,10 @@
-import { CityEntity } from '@/modules/country/entities/city.entity';
-import { CountryEntity } from '@/modules/country/entities/coutry.entity';
+import { CityEntity } from '@/modules/address/entities/city.entity';
+import { CountryEntity } from '@/modules/address/entities/coutry.entity';
 import { UserDocumentEntity } from '@/modules/user/entities/user-document.entity';
 import { UserEntity } from '@/modules/user/entities/user.entity';
 import { VerificationEntity } from '@/modules/verification/verification.entity';
 
+import { AddressEntity } from '../address/entities/address.entity';
 import { BuyerRequestItemEntity } from '../buyer/entities/buyer-request-item.entity';
 import { BuyerRequestEntity } from '../buyer/entities/buyer-request.entity';
 import { BuyerEntity } from '../buyer/entities/buyer.entity';
@@ -24,6 +25,7 @@ import { ShippingEntity } from '../shipping/entities/shipping.entity';
 export const ADMINJS_RESOURCES = [
   UserEntity,
   UserDocumentEntity,
+  AddressEntity,
   CountryEntity,
   CityEntity,
   VerificationEntity,

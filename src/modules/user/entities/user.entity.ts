@@ -1,7 +1,7 @@
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
-import { CityEntity } from '@/modules/country/entities/city.entity';
-import { CountryEntity } from '@/modules/country/entities/coutry.entity';
+import { CityEntity } from '@/modules/address/entities/city.entity';
+import { CountryEntity } from '@/modules/address/entities/coutry.entity';
 import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RoleType } from '../enums/role.enum';
 import type { User, UserPicture } from '../interfaces/user.interface';
