@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
@@ -8,6 +8,7 @@ import { DepotEntity } from './depot.entity';
 import type { DepotCarrier } from '../interfaces/depot-carrier.interface';
 
 @Entity(TableName.DEPOT_CARRIER)
+@Unique(['carrierId', 'depotId'])
 export class DepotCarrierEntity extends BaseEntity implements DepotCarrier {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',
