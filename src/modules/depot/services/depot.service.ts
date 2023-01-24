@@ -72,6 +72,10 @@ export class DepotService {
     await this.depotRepository.save({ ...updateData, depotId });
   }
 
+  public async deleteDepot(depotId: number): Promise<void> {
+    await this.depotRepository.delete(depotId);
+  }
+
   private async getDepotCity(cityId: number): Promise<DepotCity> {
     const [depotCity] = <[DepotCity]> await this.depotRepository.query(
       `
