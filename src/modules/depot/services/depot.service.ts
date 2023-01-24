@@ -8,8 +8,9 @@ import { TableName } from '@/common/enums/table';
 import type { CreateDepotBodyDto } from '../dto/create-depot.body.dto';
 import type { DepotResponseDto } from '../dto/depot.response.dto';
 import type { GetDepotsQueryDto } from '../dto/get-depots.query.dto';
+import type { UpdateDepotBodyDto } from '../dto/update-depot.body.dto';
 import { DepotEntity } from '../entities/depot.entity';
-import type { DepotCity } from '../interfaces/depot.interface';
+import type { Depot, DepotCity } from '../interfaces/depot.interface';
 
 @Injectable()
 export class DepotService {
@@ -48,6 +49,30 @@ export class DepotService {
 
   public async createDepot(data: CreateDepotBodyDto): Promise<DepotResponseDto> {
     // TODO: validate lat lng are in city location
+    const { country, ...city } = await this.getDepotCity(data.cityId);
+
+    const depot = await this.depotRepository.save({ ...data, countryId: country.countryId });
+
+    return {
+      ..._.pick(depot, ['depotId', 'name', 'address', 'phone', 'zip', 'lat', 'lng', 'buyerFee', 'allowOrder']),
+      city,
+      country,
+    };
+  }
+
+  public async updateDepot(depotId: number, data: UpdateDepotBodyDto): Promise<void> {
+    let updateData: Partial<Depot> = { ...data };
+
+    if (data.cityId) {
+      const { country } = await this.getDepotCity(data.cityId);
+
+      updateData = { ...data, countryId: country.countryId };
+    }
+
+    await this.depotRepository.save({ ...updateData, depotId });
+  }
+
+  private async getDepotCity(cityId: number): Promise<DepotCity> {
     const [depotCity] = <[DepotCity]> await this.depotRepository.query(
       `
       SELECT city."cityId", city."name", 
@@ -59,31 +84,13 @@ export class DepotService {
         INNER JOIN ${TableName.COUNTRY} AS c ON c."countryId" = city."countryId"
         WHERE city."cityId" = $1 AND c."countryId" = city."countryId"
     `,
-      [data.cityId],
+      [cityId],
     );
 
     if (!depotCity) {
-      throw new BadRequestException('Не правильно введен страна или город');
+      throw new BadRequestException('Такого города не существует');
     }
 
-    const { country, ...city } = depotCity;
-
-    const depot = await this.depotRepository.save({ ...data, countryId: country.countryId });
-
-    return {
-      ..._.pick(depot, [
-        'depotId',
-        'name',
-        'address',
-        'phone',
-        'zip',
-        'lat',
-        'lng',
-        'buyerFee',
-        'allowOrder',
-      ]),
-      city,
-      country,
-    };
+    return depotCity;
   }
 }
