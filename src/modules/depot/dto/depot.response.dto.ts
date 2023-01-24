@@ -11,6 +11,15 @@ export class DepotResponseDto {
   name!: string;
 
   @ApiProperty()
+  address!: string;
+
+  @ApiProperty()
+  phone!: string;
+
+  @ApiProperty()
+  zip!: string;
+
+  @ApiProperty()
   lat!: number;
 
   @ApiProperty()
@@ -26,12 +35,8 @@ export class DepotResponseDto {
   };
 
   @ApiProperty({ type: 'object' })
-  address!: {
-    addressId: number;
-    address: string;
+  city!: {
     cityId: number;
-    cityName: string;
-    zip: string;
-    phone: string;
+    name: string;
   };
 }
