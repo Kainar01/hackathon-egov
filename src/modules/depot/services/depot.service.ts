@@ -22,7 +22,7 @@ export class DepotService {
             'zip', a."zip",
             'phone', a."phone",
             'cityId', city."cityId", 
-            'name', city."name"
+            'cityName', city."name"
           ) AS "address"
         FROM ${TableName.DEPOT} AS d 
           INNER JOIN ${TableName.COUNTRY} AS c ON c."countryId" = d."countryId"
