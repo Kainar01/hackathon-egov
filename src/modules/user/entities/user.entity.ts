@@ -15,6 +15,9 @@ export class UserEntity extends BaseEntity implements User {
   })
   userId!: number;
 
+  @Column('varchar', { comment: 'Unique code that will be used in user address', unique: true })
+  code!: string;
+
   @Column('varchar', { nullable: true })
   firstName!: string | null;
 

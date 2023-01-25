@@ -21,6 +21,7 @@ export interface User extends BaseEntity {
   phone: string;
   iin: string | null;
   role: RoleType | null;
+  code: string;
   firstName: string | null;
   lastName: string | null;
   middleName: string | null;
