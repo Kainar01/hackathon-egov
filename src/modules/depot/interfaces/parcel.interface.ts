@@ -1,15 +1,18 @@
 import type { BaseEntity } from '@/common/entities/base.entity';
 
+import type { ParcelStatusType } from '../enum/parcel.enum';
+
 export interface Parcel extends BaseEntity {
   parcelId: number;
   userId: number;
-  parcelStatusId: number | null;
+  status: ParcelStatusType;
   parcelGroupId: number | null;
   trackingCode: string;
   departureDepotId: number;
   destinationDepotId: number;
-  weight: number;
-  total: number;
-  buyerFee: number;
+  weight: number | null;
+  total: number | null;
+  buyerFee: number | null;
+  creatorStaffId: number | null;
   comment: string | null;
 }

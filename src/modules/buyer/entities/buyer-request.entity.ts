@@ -1,11 +1,11 @@
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
+import { DepotStaffEntity } from '@/modules/depot/entities/depot-staff.entity';
 import { DepotEntity } from '@/modules/depot/entities/depot.entity';
 import { UserEntity } from '@/modules/user/entities/user.entity';
 import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BuyerRequestStatus } from '../enums/buyer-request.enum';
 import type { BuyerRequest } from '../interfaces/buyer-request.interface';
-import { BuyerEntity } from './buyer.entity';
 
 @Entity(TableName.BUYER_REQUEST)
 @Check('"total" >= 0')
@@ -22,7 +22,7 @@ export class BuyerRequestEntity extends BaseEntity implements BuyerRequest {
   userId!: number;
 
   @Column('int', { nullable: true })
-  buyerId!: number | null;
+  buyerStaffId!: number | null;
 
   @Column('enum', { enum: BuyerRequestStatus })
   status!: BuyerRequestStatus;
@@ -47,11 +47,11 @@ export class BuyerRequestEntity extends BaseEntity implements BuyerRequest {
   @JoinColumn({ name: 'userId' })
   user?: UserEntity;
 
-  @ManyToOne(() => BuyerEntity, {
+  @ManyToOne(() => DepotStaffEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
     deferrable: 'INITIALLY DEFERRED',
   })
-  @JoinColumn({ name: 'buyerId' })
-  buyer?: BuyerEntity;
+  @JoinColumn({ name: 'buyerStaffId' })
+  buyerStaff?: DepotStaffEntity;
 }

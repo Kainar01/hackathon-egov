@@ -7,8 +7,8 @@ import { VerificationEntity } from '@/modules/verification/verification.entity';
 import { AddressEntity } from '../address/entities/address.entity';
 import { BuyerRequestItemEntity } from '../buyer/entities/buyer-request-item.entity';
 import { BuyerRequestEntity } from '../buyer/entities/buyer-request.entity';
-import { BuyerEntity } from '../buyer/entities/buyer.entity';
 import { DepotCarrierEntity } from '../depot/entities/depot-carrier.entity';
+import { DepotStaffRoleEntity } from '../depot/entities/depot-staff-role.entity';
 import { DepotStaffEntity } from '../depot/entities/depot-staff.entity';
 import { DepotEntity } from '../depot/entities/depot.entity';
 import { ParcelGroupEntity } from '../depot/entities/parcel-group.entity';
@@ -31,6 +31,7 @@ export const ADMINJS_RESOURCES = [
   VerificationEntity,
   DepotEntity,
   DepotStaffEntity,
+  DepotStaffRoleEntity,
   DepotCarrierEntity,
   RouteEntity,
   GateEntity,
@@ -42,7 +43,6 @@ export const ADMINJS_RESOURCES = [
   ParcelGroupEntity,
   ParcelStatusEntity,
   ParcelItemEntity,
-  BuyerEntity,
   BuyerRequestEntity,
   BuyerRequestItemEntity,
 ];

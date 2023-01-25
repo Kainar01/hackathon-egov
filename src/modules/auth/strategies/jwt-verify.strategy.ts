@@ -29,6 +29,6 @@ export class JwtVerifyStrategy extends PassportStrategy(Strategy, 'jwt-verify') 
     if (payload === null) {
       throw new UnauthorizedException();
     }
-    return { userId: payload.sub, role: payload.role, doctorId: payload.doctorId, patientId: payload.patientId };
+    return { userId: payload.sub, role: payload.role, depotStaffId: payload.depotStaffId };
   }
 }
