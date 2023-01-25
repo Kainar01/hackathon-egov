@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
-export class CreateParcelBodyDto {
+export class CreateUntrackedParcelBodyDto {
     @IsString()
     @IsNotEmpty()
     trackingCode!: string;
