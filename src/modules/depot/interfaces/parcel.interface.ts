@@ -9,7 +9,7 @@ export interface Parcel extends BaseEntity {
   parcelGroupId: number | null;
   trackingCode: string;
   departureDepotId: number;
-  destinationDepotId: number | null;
+  destinationDepotId: number;
   weight: number | null;
   total: number | null;
   buyerFee: number | null;

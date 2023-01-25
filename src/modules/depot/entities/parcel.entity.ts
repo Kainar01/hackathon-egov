@@ -26,8 +26,8 @@ export class ParcelEntity extends BaseEntity implements Parcel {
   @Column('int')
   departureDepotId!: number;
 
-  @Column('int', {nullable: true})
-  destinationDepotId!: number | null;
+  @Column('int')
+  destinationDepotId!: number;
 
   @Column('int', { nullable: true })
   parcelGroupId!: number | null;
