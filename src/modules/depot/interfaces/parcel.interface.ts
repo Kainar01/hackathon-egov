@@ -13,6 +13,6 @@ export interface Parcel extends BaseEntity {
   weight: number | null;
   total: number | null;
   buyerFee: number | null;
-  isAddedByStaff: boolean;
+  creatorStaffId: number | null;
   comment: string | null;
 }

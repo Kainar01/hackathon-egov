@@ -8,6 +8,7 @@ import { DepotEntity } from './depot.entity';
 import { ParcelGroupEntity } from './parcel-group.entity';
 import type { Parcel } from '../interfaces/parcel.interface';
 import { ParcelStatusType } from '../enum/parcel.enum';
+import { DepotStaffEntity } from './depot-staff.entity';
 
 @Entity(TableName.PARCEL)
 @Check('"departureDepotId" <> "destinationDepotId"')
@@ -47,8 +48,8 @@ export class ParcelEntity extends BaseEntity implements Parcel {
   @Column('numeric', { comment: 'Total shipping weight in kg', nullable: true })
   weight!: number | null;
 
-  @Column('boolean', { default: false })
-  isAddedByStaff!: boolean;
+  @Column('int', { nullable: true })
+  creatorStaffId!: number | null;
 
   @Column('text', { comment: 'Comment on parcel', nullable: true })
   comment!: string | null;
@@ -81,4 +82,11 @@ export class ParcelEntity extends BaseEntity implements Parcel {
   })
   @JoinColumn({ name: 'parcelGroupId' })
   parcelGroup?: ParcelGroupEntity;
+
+  @ManyToOne(() => DepotStaffEntity, {
+    onDelete: 'CASCADE',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinColumn({ name: 'creatorStaffId' })
+  creatorStaff?: DepotStaffEntity;
 }
