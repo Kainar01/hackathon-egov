@@ -7,6 +7,7 @@ export enum TableName {
   VERIFICATION = 'verification',
   DEPOT = 'depot',
   DEPOT_STAFF = 'depot_staff',
+  DEPOT_STAFF_ROLE = 'depot_staff_role',
   DEPOT_CARRIER = 'depot_carrier',
   ROUTE = 'route',
   GATE = 'gate',
@@ -18,7 +19,6 @@ export enum TableName {
   PARCEL_STATUS = 'parcel_status',
   PARCEL_GROUP = 'parcel_group',
   PARCEL_ITEM = 'parcel_item',
-  BUYER = 'buyer',
   BUYER_REQUEST = 'buyer_request',
   BUYER_REQUEST_ITEM = 'buyer_request_item',
 }
