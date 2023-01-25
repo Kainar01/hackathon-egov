@@ -28,6 +28,8 @@ export interface User extends BaseEntity {
   birthDate: Date | null;
   balance: number;
   cityId: number | null;
+  countryId: number | null;
   picture: UserPicture | null;
   isVerified: boolean;
+  depotId: number | null;
 }

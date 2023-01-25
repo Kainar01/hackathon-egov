@@ -2,6 +2,7 @@ import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
 import { CityEntity } from '@/modules/address/entities/city.entity';
 import { CountryEntity } from '@/modules/address/entities/coutry.entity';
+import { DepotEntity } from '@/modules/depot/entities/depot.entity';
 import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RoleType } from '../enums/role.enum';
 import type { User, UserPicture } from '../interfaces/user.interface';
@@ -49,6 +50,9 @@ export class UserEntity extends BaseEntity implements User {
   cityId!: number | null;
 
   @Column('int', { nullable: true })
+  depotId!: number | null;
+
+  @Column('int', { nullable: true })
   countryId!: number | null;
 
   @Column('jsonb', { nullable: true })
@@ -73,4 +77,11 @@ export class UserEntity extends BaseEntity implements User {
   })
   @JoinColumn({ name: 'countryId' })
   country?: CountryEntity;
+
+  @ManyToOne(() => DepotEntity, {
+    onDelete: 'CASCADE',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinColumn({ name: 'depotId' })
+  depot?: DepotEntity;
 }
