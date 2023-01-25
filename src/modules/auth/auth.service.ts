@@ -81,7 +81,7 @@ export class AuthService {
   }
 
   public jwtSign(data: UserPayload): JwtSign {
-    const payload: JwtPayload = { sub: data.userId, role: data.role, patientId: data.patientId, doctorId: data.doctorId };
+    const payload: JwtPayload = { sub: data.userId, role: data.role, depotStaffId: data.depotStaffId };
 
     return {
       access_token: this.jwt.sign(payload),

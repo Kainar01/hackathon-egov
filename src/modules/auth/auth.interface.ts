@@ -9,29 +9,11 @@ export interface JwtSign {
 
 export interface JwtPayload extends Pick<User, 'role'> {
   sub: number;
-  doctorId?: number;
-  patientId?: number;
+  depotStaffId: number | null;
 }
 
 export interface UserPayload {
   userId: number;
-  patientId?: number;
-  doctorId?: number;
-  role: RoleType | null;
-}
-
-export interface DoctorAuthUser {
-  userId: number;
-  email: string;
-  password: string;
-  doctorId: number;
-  role: RoleType | null;
-}
-
-export interface PatientAuthUser {
-  userId: number;
-  email: string;
-  password: string;
-  patientId: number;
+  depotStaffId: number | null;
   role: RoleType | null;
 }
