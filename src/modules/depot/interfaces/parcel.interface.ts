@@ -5,7 +5,7 @@ import type { ParcelStatusType } from '../enum/parcel.enum';
 export interface Parcel extends BaseEntity {
   parcelId: number;
   userId: number;
-  parcelStatus: ParcelStatusType;
+  status: ParcelStatusType;
   parcelGroupId: number | null;
   trackingCode: string;
   departureDepotId: number;

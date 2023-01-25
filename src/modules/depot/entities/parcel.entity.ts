@@ -34,7 +34,7 @@ export class ParcelEntity extends BaseEntity implements Parcel {
 
   @Index()
   @Column('enum', { enum: ParcelStatusType, default: ParcelStatusType.REGISTRATION_PENDING })
-  parcelStatus!: ParcelStatusType;
+  status!: ParcelStatusType;
 
   @Column('varchar', { unique: true })
   trackingCode!: string;
