@@ -1,25 +1,25 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { BaseEntity } from '@/common/entities/base.entity';
 import { TableName } from '@/common/enums/table';
 
-import type { ShippingRouteGate } from '../interfaces/shipping-route-gate.interface';
-import { RouteGateEntity } from './route-gate.entity';
+import type { ShippingEvent } from '../interfaces/shipping-event.interface';
 import { ShippingEntity } from './shipping.entity';
+import { GateEntity } from './gate.entity';
+import { ShippingEventType } from '../enum/shipping-event.enum';
 
-@Entity(TableName.SHIPPING_ROUTE_GATE)
-@Unique(['shippingId', 'routeGateId'])
-export class ShippingRouteGateEntity extends BaseEntity implements ShippingRouteGate {
+@Entity(TableName.SHIPPING_EVENT)
+export class ShippingEventEntity extends BaseEntity implements ShippingEvent {
   @PrimaryGeneratedColumn('identity', {
     generatedIdentity: 'ALWAYS',
   })
-  shippingRouteGateId!: number;
+  shippingEventId!: number;
 
   @Column('int')
   shippingId!: number;
 
-  @Column('int')
-  routeGateId!: number;
+  @Column('int', { nullable: true })
+  gateId!: number | null;
 
   @Column('timestamptz', { nullable: true })
   arrival!: Date | null;
@@ -33,6 +33,9 @@ export class ShippingRouteGateEntity extends BaseEntity implements ShippingRoute
   @Column('text', { nullable: true })
   comment!: string;
 
+  @Column('enum', { enum: ShippingEventType })
+  type!: ShippingEventType;
+
   @ManyToOne(() => ShippingEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
@@ -41,10 +44,10 @@ export class ShippingRouteGateEntity extends BaseEntity implements ShippingRoute
   @JoinColumn({ name: 'shippingId' })
   shipping?: ShippingEntity;
 
-  @ManyToOne(() => RouteGateEntity, {
+  @ManyToOne(() => GateEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
   })
-  @JoinColumn({ name: 'routeGateId' })
-  routeGate?: RouteGateEntity;
+  @JoinColumn({ name: 'gateId' })
+  gate?: GateEntity;
 }

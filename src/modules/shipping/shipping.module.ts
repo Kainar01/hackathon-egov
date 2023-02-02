@@ -5,7 +5,7 @@ import { CarrierEntity } from './entities/carrier.entity';
 import { GateEntity } from './entities/gate.entity';
 import { RouteGateEntity } from './entities/route-gate.entity';
 import { RouteEntity } from './entities/route.entity';
-import { ShippingRouteGateEntity } from './entities/shipping-route-gate.entity';
+import { ShippingEventEntity } from './entities/shipping-route-gate.entity';
 import { ShippingEntity } from './entities/shipping.entity';
 
 @Module({
@@ -15,7 +15,7 @@ import { ShippingEntity } from './entities/shipping.entity';
     RouteGateEntity,
     ShippingEntity,
     CarrierEntity,
-    ShippingRouteGateEntity,
+    ShippingEventEntity,
   ])],
 })
 export class ShippingModule {}
