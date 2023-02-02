@@ -19,7 +19,7 @@ import { CarrierEntity } from '../shipping/entities/carrier.entity';
 import { GateEntity } from '../shipping/entities/gate.entity';
 import { RouteGateEntity } from '../shipping/entities/route-gate.entity';
 import { RouteEntity } from '../shipping/entities/route.entity';
-import { ShippingRouteGateEntity } from '../shipping/entities/shipping-route-gate.entity';
+import { ShippingEventEntity } from '../shipping/entities/shipping-route-gate.entity';
 import { ShippingEntity } from '../shipping/entities/shipping.entity';
 
 export const ADMINJS_RESOURCES = [
@@ -37,7 +37,7 @@ export const ADMINJS_RESOURCES = [
   GateEntity,
   RouteGateEntity,
   ShippingEntity,
-  ShippingRouteGateEntity,
+  ShippingEventEntity,
   CarrierEntity,
   ParcelEntity,
   ParcelGroupEntity,
