@@ -4,7 +4,7 @@
 
   tasks:
     - name: Run yarn install
-      yarn: 
+      community.general.yarn: 
         path: '{{ deploy_folder }}'
 
     - name: Run migration
