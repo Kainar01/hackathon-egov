@@ -28,7 +28,7 @@ deploy:deploy_dev:
     - ansible-playbook -i $DEV_INVENTORY --private-key secret/ansible.key ./ansible/playbooks/deploy.yml 
   
 migration:dev:
-  stage: deploy
+  stage: migration
   only: 
     refs:
       - development
@@ -57,7 +57,7 @@ deploy:deploy_prod:
     - ansible-playbook -i $PROD_INVENTORY --private-key secret/ansible.key ./ansible/playbooks/deploy.yml 
   
 migration:prod:
-  stage: deploy
+  stage: migration
   only: 
     refs:
       - master
