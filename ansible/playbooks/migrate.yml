@@ -1,6 +1,6 @@
 - hosts: all
   vars:
-    deploy_folder: /home/ubuntu/pro-cargo/pro-cargo
+    deploy_folder: /home/techbridge/pro-cargo/pro-cargo
 
   tasks:
     - name: Run yarn install
