@@ -27,16 +27,4 @@ export class DepotResponseDto {
 
   @ApiProperty()
   allowOrder!: boolean;
-
-  @ApiProperty({ type: 'object' })
-  country!: {
-    countryId: number;
-    name: string;
-  };
-
-  @ApiProperty({ type: 'object' })
-  city!: {
-    cityId: number;
-    name: string;
-  };
 }

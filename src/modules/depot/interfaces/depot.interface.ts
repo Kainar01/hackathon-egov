@@ -13,12 +13,3 @@ export interface Depot extends BaseEntity {
   cityId: number;
   countryId: number;
 }
-
-export interface DepotCity {
-  cityId: number;
-  name: string;
-  country: {
-    countryId: number;
-    name: string;
-  };
-}
