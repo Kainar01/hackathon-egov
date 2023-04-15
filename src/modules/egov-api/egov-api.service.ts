@@ -9,7 +9,7 @@ import type { UserInfo } from './interfaces/user-info.interface';
 
 @Injectable()
 export class EgovApiService {
-  public async getToken():Promise<AccessToken> {
+  public async getToken(): Promise<AccessToken> {
     const data = new URLSearchParams({
       username: 'test-operator',
       password: 'DjrsmA9RMXRl',
@@ -23,17 +23,13 @@ export class EgovApiService {
       },
     };
 
-    const response = await axios.post(
-      'http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token',
-      data,
-      config,
-    );
-    return <AccessToken> { access_token: response.data.access_token };
+    const response = await axios.post('http://hakaton-idp.gov4c.kz/auth/realms/con-web/protocol/openid-connect/token', data, config);
+    return <AccessToken>{ access_token: response.data.access_token };
   }
 
-  public async getEgovUser(iin:string):Promise<UserInfo> {
+  public async getEgovUser(iin: string): Promise<UserInfo> {
     const url = `http://hakaton-fl.gov4c.kz/api/persons/${iin}/`;
-    const token = await this.getToken().then((result) => result.access_token);
+    const token = await this.getToken().then((result: AccessToken) => result.access_token);
 
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -42,9 +38,9 @@ export class EgovApiService {
     return <UserInfo>response.data;
   }
 
-  public async getPhone(iin:string):Promise<Phone> {
+  public async getPhone(iin: string): Promise<Phone> {
     const url = `http://hakaton.gov4c.kz/api/bmg/check/${iin}/`;
-    const token = await this.getToken().then((result) => result.access_token);
+    const token = await this.getToken().then((result: AccessToken) => result.access_token);
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -52,9 +48,9 @@ export class EgovApiService {
     return <Phone>response.data;
   }
 
-  public async sendSMS({ phone, smsText }:SmsDataDto):Promise<SmsStatus> {
+  public async sendSMS({ phone, smsText }: SmsDataDto): Promise<SmsStatus> {
     const url = 'http://hak-sms123.gov4c.kz/api/smsgateway/send';
-    const token = await this.getToken().then((result) => result.access_token);
+    const token = await this.getToken().then((result: AccessToken) => result.access_token);
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -65,6 +61,6 @@ export class EgovApiService {
     };
 
     const response = await axios.post(url, payload, { headers });
-    return <SmsStatus> response.data;
+    return <SmsStatus>response.data;
   }
 }
