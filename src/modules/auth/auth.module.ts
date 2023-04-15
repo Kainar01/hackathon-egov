@@ -5,6 +5,7 @@ import { ServerConfig } from '@/config/server.config';
 import { PrismaModule } from '@/prisma';
 
 import { EgovApiModule } from '../egov-api/egov-api.module';
+import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
@@ -16,6 +17,7 @@ import { AuthService } from './auth.service';
       secret: ServerConfig.JWT_ACCESS_SECRET,
       signOptions: { expiresIn: `${ServerConfig.JWT_ACCESS_TTL_IN_MINUTES} minutes` },
     }),
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],

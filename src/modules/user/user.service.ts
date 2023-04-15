@@ -31,7 +31,7 @@ export class UserService {
 
     const data = await this.egovService.getPhone(iin);
 
-    const phone = data.isExists ? data.phoneNumber : null;
+    const phone = data.isExists ? data.phone : null;
 
     return this.prisma.user.upsert({
       where: { iin },

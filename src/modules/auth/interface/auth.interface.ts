@@ -1,9 +1,11 @@
+import { Role } from '@/modules/user/user.enum';
+
 export interface UserPayload {
-  userId:number;
-  role:string;
+  userId: number;
+  roles: Role[];
 }
 
 export interface JwtPayload {
-  sub:number;
-  role:string;
+  sub: number;
+  roles: Role[];
 }

@@ -1,5 +1,5 @@
 export interface Phone {
   isExists:boolean;
-  phoneNumber:string;
+  phone:string;
   error:boolean;
 }
