@@ -33,7 +33,7 @@ export class EgovApiService {
 
   public async getEgovUser(iin:string):Promise<UserInfo> {
     const url = `http://hakaton-fl.gov4c.kz/api/persons/${iin}/`;
-    const token = await this.getToken().then((result) => result.access_token);
+    const token = await this.getToken().then((result:AccessToken) => result.access_token);
 
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -44,7 +44,7 @@ export class EgovApiService {
 
   public async getPhone(iin:string):Promise<Phone> {
     const url = `http://hakaton.gov4c.kz/api/bmg/check/${iin}/`;
-    const token = await this.getToken().then((result) => result.access_token);
+    const token = await this.getToken().then((result:AccessToken) => result.access_token);
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -54,7 +54,7 @@ export class EgovApiService {
 
   public async sendSMS({ phone, smsText }:SmsDataDto):Promise<SmsStatus> {
     const url = 'http://hak-sms123.gov4c.kz/api/smsgateway/send';
-    const token = await this.getToken().then((result) => result.access_token);
+    const token = await this.getToken().then((result:AccessToken) => result.access_token);
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
