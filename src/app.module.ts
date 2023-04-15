@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CarrierProviderModule } from './modules/carrier-provider/carrier-provider.module';
 import { CarrierModule } from './modules/carrier/carrier.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
+import { EgovApiModule } from './modules/egov-api/egov-api.module';
 import { RequestModule } from './modules/request/request.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -31,6 +32,7 @@ import { UserModule } from './modules/user/user.module';
     RequestModule,
     // https://docs.nestjs.com/recipes/router-module
     RouterModule.register([]),
+    EgovApiModule,
   ],
   providers: [
     {
