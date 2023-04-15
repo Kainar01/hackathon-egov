@@ -10,14 +10,4 @@ export class UserService {
   public async findOne(userId: number): Promise<User | null> {
     return this.prisma.user.findFirst({ where: { id: userId } });
   }
-
-  public async findOrCreate(tgChatId: number): Promise<User> {
-    return this.prisma.user.upsert({
-      where: { tgChatId },
-      update: {},
-      create: {
-        tgChatId,
-      },
-    });
-  }
 }

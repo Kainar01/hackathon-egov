@@ -1,0 +1,182 @@
+[
+  {
+    "requestId": "002241054097",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:07:05.605+06:00"
+  },
+  {
+    "requestId": "002241054795",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:12:05.753+06:00"
+  },
+  {
+    "requestId": "002241054954",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:14:05.821+06:00"
+  },
+  {
+    "requestId": "002241055082",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:15:25.870+06:00"
+  },
+  {
+    "requestId": "002241055257",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "STARTED",
+      "statusInfo": null,
+      "statusInfoKz": null
+    },
+    "statusDate": "2023-04-14T16:15:25.870+06:00"
+  },
+  {
+    "requestId": "002241055387",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "STARTED",
+      "statusInfo": null,
+      "statusInfoKz": null
+    },
+    "statusDate": "2023-04-14T16:16:45.919+06:00"
+  },
+  {
+    "requestId": "002241055659",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:18:45.986+06:00"
+  },
+  {
+    "requestId": "002241055886",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:20:26.037+06:00"
+  },
+  {
+    "requestId": "002241056742",
+    "resultCode": "OK",
+    "serviceType": {
+      "code": "P02-197",
+      "nameRu": "Выдача справки о наличии либо отсутствии судимости",
+      "nameKz": "Сотталғандығы болуы не болмауы туралы анықтама беру"
+    },
+    "organization": {
+      "code": "BUS",
+      "nameRu": "ИИС ЦОН",
+      "nameKz": "ИИС ЦОН"
+    },
+    "appStatus": {
+      "appState": "FINISHED",
+      "statusInfo": "Исполнено в ГО",
+      "statusInfoKz": "Исполнено в ГО"
+    },
+    "statusDate": "2023-04-14T16:28:06.254+06:00"
+  }
+]

@@ -12,6 +12,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
+    "prisma:seed": "prisma db seed",
     "start": "env-cmd nest start",
     "start:dev": "env-cmd nest start --watch",
     "start:debug": "env-cmdnest start --debug --watch",
@@ -132,5 +133,8 @@
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.0.0",
     "typescript": "^4.3.5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

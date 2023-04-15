@@ -3,12 +3,9 @@ import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { RedisIoAdapter } from '@/common/adapters/redis.adapter';
-
 import { middleware } from './app.middleware';
 import { AppModule } from './app.module';
 import { Logger } from './common/logger';
-import { RedisConfig } from './config/redis.config';
 import { ServerConfig } from './config/server.config';
 
 function setupApiDocument(app: NestExpressApplication): void {
@@ -49,12 +46,6 @@ async function bootstrap(): Promise<string> {
 
   // swagger
   setupApiDocument(app);
-
-  // redis adapter
-  const redisIoAdapter = new RedisIoAdapter(app);
-  await redisIoAdapter.connectToRedis(RedisConfig.REDIS_URL);
-
-  app.useWebSocketAdapter(redisIoAdapter);
 
   // GRACEFUL SHUTDOWN
   app.enableShutdownHooks();

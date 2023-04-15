@@ -1,36 +1,17 @@
-import { BullModule } from '@nestjs/bull';
-import {
-  CacheStoreFactory,
-  MiddlewareConsumer,
-  NestModule,
-  BadRequestException,
-  CacheModule,
-  Module,
-  ValidationPipe,
-  HttpException,
-} from '@nestjs/common';
+import { MiddlewareConsumer, NestModule, BadRequestException, Module, ValidationPipe, HttpException } from '@nestjs/common';
 import { APP_INTERCEPTOR, APP_PIPE, RouterModule } from '@nestjs/core';
 import { SentryModule, SentryInterceptor } from '@ntegral/nestjs-sentry';
-import * as redisStore from 'cache-manager-redis-store';
 import type { ValidationError } from 'class-validator';
-import { TelegrafModule } from 'nestjs-telegraf';
-import type { RedisClientOptions } from 'redis';
 
 import { CommonModule } from './common/common.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { telegramSessionMiddleware } from './common/middleware/telegram-session.middleware';
-import { BotConfig } from './config/bot.config';
-import { RedisConfig } from './config/redis.config';
 import { SentryConfig } from './config/sentry.config';
 import { ServerConfig } from './config/server.config';
 import { AuthModule } from './modules/auth/auth.module';
-import { TelegramAuthMiddleware } from './modules/auth/middlewares/telegram-auth.middleware';
-import { CoffeeShopBotModule } from './modules/coffee-shop-bot/coffee-shop-bot.module';
-import { CouponModule } from './modules/coupon/coupon.module';
-import { PlanModule } from './modules/plan/plan.module';
-import { SubscriptionPaymentModule } from './modules/subscription-payment/subscription-payment.module';
-import { SubscriptionModule } from './modules/subscription/subscription.module';
-import { TelegramChatModule } from './modules/telegram-chat/telegram-chat.module';
+import { CarrierProviderModule } from './modules/carrier-provider/carrier-provider.module';
+import { CarrierModule } from './modules/carrier/carrier.module';
+import { DeliveryModule } from './modules/delivery/delivery.module';
+import { RequestModule } from './modules/request/request.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -41,31 +22,13 @@ import { UserModule } from './modules/user/user.module';
       environment: ServerConfig.NODE_ENV,
       logLevels: ['debug'],
     }),
-    CacheModule.register<RedisClientOptions>({
-      isGlobal: true,
-      store: <CacheStoreFactory>redisStore,
-      url: RedisConfig.REDIS_URL,
-    }),
-    BullModule.forRoot({
-      url: RedisConfig.REDIS_URL,
-    }),
-    TelegrafModule.forRootAsync({
-      botName: BotConfig.TELEGRAM_BOT_NAME,
-      useFactory: (authMiddleware: TelegramAuthMiddleware) => ({
-        token: BotConfig.TELEGRAM_BOT_TOKEN,
-        middlewares: [telegramSessionMiddleware, authMiddleware.use.bind(authMiddleware)],
-      }),
-      inject: [TelegramAuthMiddleware],
-    }),
     CommonModule,
     UserModule,
-    SubscriptionModule,
-    PlanModule,
-    SubscriptionPaymentModule,
-    CouponModule,
-    CoffeeShopBotModule,
-    TelegramChatModule,
     AuthModule,
+    CarrierModule,
+    CarrierProviderModule,
+    DeliveryModule,
+    RequestModule,
     // https://docs.nestjs.com/recipes/router-module
     RouterModule.register([]),
   ],
