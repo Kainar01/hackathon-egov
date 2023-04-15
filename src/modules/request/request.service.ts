@@ -62,14 +62,19 @@ export class RequestService {
     };
   }
 
-  public async findForClient(userId: number): Promise<Request[]> {
-    const userRequests = await this.prisma.userRequest.findMany({ where: { requesterUserId: userId }, include: { request: true } });
-    return _.map(userRequests, 'request');
+  public async findForClient(userId: number): Promise<ClientRequest[]> {
+    const userRequests = await this.prisma.userRequest.findMany({
+      where: { requesterUserId: userId },
+      include: { request: true, delivery: true },
+    });
+
+    // eslint-disable-next-line @typescript-eslint/typedef
+    return userRequests.map(({ delivery, ...userRequest }) => ({ delivery, userRequest }));
   }
 
-  public async findForOperator(): Promise<OperatorRequest[]> {
+  public async findForOperator(status: RequestStatus = RequestStatus.PENDING): Promise<OperatorRequest[]> {
     const userRequests = await this.prisma.userRequest.findMany({
-      where: { status: RequestStatus.PENDING },
+      where: { status },
       include: { request: true, requesterUser: true, delivery: { include: { trustedDeliveryUser: true } } },
     });
 
