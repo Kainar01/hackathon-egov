@@ -29,7 +29,7 @@ export class RequestService {
 
   public async findForCarrier(carrierId: number): Promise<CarrierRequest[]> {
     const deliveries = await this.prisma.delivery.findMany({
-      where: { carrierId },
+      where: { carrierId, userRequest: { status: RequestStatus.IN_PROGRESS } },
       include: { userRequest: { include: { request: true } } },
     });
     // eslint-disable-next-line @typescript-eslint/typedef

@@ -4,7 +4,7 @@ import { User } from '@prisma/client';
 import { UserService } from './user.service';
 
 @Controller('/user')
-export class RequestController {
+export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('/me')

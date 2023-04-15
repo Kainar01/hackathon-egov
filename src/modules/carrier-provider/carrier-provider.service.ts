@@ -3,17 +3,18 @@ import { CarrierProvider } from '@prisma/client';
 
 import { PrismaService } from '@/prisma';
 
+import { EgovApiService } from '../egov-api/egov-api.service';
 import { Role } from '../user/user.enum';
 import { CreateProviderDto } from './dto/create-provider.dto';
 
 @Injectable()
 export class CarrierProviderService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly egovService: EgovApiService) {}
 
-  public async create({ providerOwner, ...data }: CreateProviderDto): Promise<CarrierProvider> {
+  public async create({ phone, name }: CreateProviderDto): Promise<CarrierProvider> {
     const user = await this.prisma.user.create({
       data: {
-        ...providerOwner,
+        phone,
       },
     });
 
@@ -24,13 +25,20 @@ export class CarrierProviderService {
       },
     });
 
-    const provider = await this.prisma.providerOwner.create({ data: { userId: user.id } });
+    const owner = await this.prisma.providerOwner.create({ data: { userId: user.id } });
 
-    return this.prisma.carrierProvider.create({
+    const provider = await this.prisma.carrierProvider.create({
       data: {
-        ...data,
-        providerOwnerId: provider.id,
+        name,
+        providerOwnerId: owner.id,
       },
     });
+
+    await this.egovService.sendSMS({
+      phone,
+      smsText: `Ваша курьерская служба ${name} создана в egov. Войдите в личный кабинет и начните работу`,
+    });
+
+    return provider;
   }
 }

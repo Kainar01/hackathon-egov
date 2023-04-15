@@ -1,7 +1,9 @@
-import { CarrierProvider } from '@prisma/client';
+import { IsString } from 'class-validator';
 
-export interface CreateProviderDto extends Pick<CarrierProvider, 'name'> {
-  providerOwner: {
-    phone: string;
-  };
+export class CreateProviderDto {
+  @IsString()
+  public phone!: string;
+
+  @IsString()
+  public name!: string;
 }
