@@ -1,19 +1,9 @@
-import type { User } from '@/modules/user/interfaces/user.interface';
-
-import type { RoleType } from '../user/enums/role.enum';
-
-export interface JwtSign {
-  access_token: string;
-  refresh_token: string;
-}
-
-export interface JwtPayload extends Pick<User, 'role'> {
-  sub: number;
-  depotStaffId: number | null;
-}
-
-export interface UserPayload {
+export interface JWTPayload {
   userId: number;
-  depotStaffId: number | null;
-  role: RoleType | null;
+  roles: string[];
+}
+
+export interface AuthUser {
+  userId: number;
+  roles: string[];
 }

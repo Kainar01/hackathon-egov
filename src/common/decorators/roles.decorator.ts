@@ -1,6 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
 
-import type { RoleType } from '@/modules/user/enums/role.enum';
+import type { Role } from '@/modules/user/user.enum';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const HasRoles = (...roles: RoleType[]) => SetMetadata('roles', roles);
+export const HasRoles = (...roles: Role[]) => SetMetadata('roles', roles);

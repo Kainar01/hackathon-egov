@@ -4,7 +4,11 @@ import { Injectable } from '@nestjs/common';
 import { CountryCode, parsePhoneNumber } from 'libphonenumber-js';
 import { v4 as uuid } from 'uuid';
 
-import type { ParsedPhoneNumber } from '../interfaces/phone';
+interface ParsedPhoneNumber {
+  countryCode: string;
+  national: string;
+  international: string;
+}
 
 @Injectable()
 export class UtilService {
@@ -41,7 +45,7 @@ export class UtilService {
     return path.join(prefixDir, `${randomName}${fileExtName}`);
   }
 
-  public generateSqlParams(array: Array<any>, offset:number = 1): string {
-    return array.map((_: any, ind: number) => `$${(offset + ind)}`).join(',');
+  public generateSqlParams(array: Array<any>, offset: number = 1): string {
+    return array.map((_: any, ind: number) => `$${offset + ind}`).join(',');
   }
 }

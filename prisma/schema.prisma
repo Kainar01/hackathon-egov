@@ -1,0 +1,164 @@
+generator serverClient {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int                   @id @default(autoincrement())
+  email                String?
+  password             String?
+  firstName            String?
+  lastName             String?
+  deletedAt            DateTime?
+  userRoles            UserRole[]
+  subscription         Subscription?
+  coffeeShopOwner      CoffeeShopOwner?
+  orders               Order[]
+  subscriptionPayments SubscriptionPayment[]
+  telegramChat         TelegramChat?         @relation(fields: [tgChatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tgChatId             Int?                  @unique(map: "User.tgChatId_unique")
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@unique([email], map: "User.email_unique")
+}
+
+model UserRole {
+  id        Int      @id @default(autoincrement())
+  role      String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, role], map: "UserRole.userId_role_unique")
+}
+
+model CoffeeShopOwner {
+  id          Int          @id @default(autoincrement())
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      Int          @unique(map: "CoffeeShopOwner.userId_unique")
+  coffeeShops CoffeeShop[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model CoffeeShop {
+  id                Int             @id @default(autoincrement())
+  name              String
+  coffeeShopOwner   CoffeeShopOwner @relation(fields: [coffeeShopOwnerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coffeeShopOwnerId Int
+  location          String?
+  image             String?
+  orders            Order[]
+  telegramChat      TelegramChat?   @relation(fields: [telegramChatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  telegramChatId    Int?            @unique(map: "CoffeeShop.telegramChatId_unique")
+  products          Product[]
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model Subscription {
+  id                   Int                   @id @default(autoincrement())
+  startDate            DateTime
+  expirationDate       DateTime
+  status               String
+  coffeeOrders         Int                   @default(0)
+  coffeeLimit          Int?
+  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId               Int                   @unique(map: "Subscription.userId_unique")
+  plan                 Plan                  @relation(fields: [planId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  planId               Int
+  subscriptionPayments SubscriptionPayment[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+}
+
+model Order {
+  id           Int        @id @default(autoincrement())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       Int
+  coffeeShop   CoffeeShop @relation(fields: [coffeeShopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coffeeShopId Int
+  lineItems    LineItem[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  couponId     Int?
+}
+
+model LineItem {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId Int
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orderId   Int
+
+  @@unique([orderId, productId], map: "LineItem.orderId_productId_unique")
+}
+
+model Plan {
+  id            Int            @id @default(autoincrement())
+  name          String
+  periodDays    Int // Period in days
+  coffeeLimit   Int?
+  price         Decimal        @db.Decimal(19, 2)
+  subscriptions Subscription[]
+  coupons       Coupon[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Coupon {
+  id                  Int                  @id @default(autoincrement())
+  title               String
+  code                String
+  plan                Plan                 @relation(fields: [planId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  planId              Int
+  expirationDate      DateTime
+  activatedAt         DateTime?
+  subscriptionPayment SubscriptionPayment?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@index([code, expirationDate], map: "Coupon.code_expirationDate_index")
+}
+
+model SubscriptionPayment {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId         Int
+  status         String
+  type           String
+  amount         Decimal      @db.Decimal(19, 2)
+  coupon         Coupon       @relation(fields: [couponId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  couponId       Int          @unique(map: "Payment.couponId")
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subscriptionId Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model TelegramChat {
+  id         Int         @id @default(autoincrement())
+  tgChatId   Int         @unique(map: "TelegramChat.tgChatId_unique")
+  type       String
+  user       User?
+  coffeeShop CoffeeShop?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Product {
+  id           Int        @id @default(autoincrement())
+  name         String
+  coffeeShop   CoffeeShop @relation(fields: [coffeeShopId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coffeeShopId Int
+  lineItems    LineItem[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
