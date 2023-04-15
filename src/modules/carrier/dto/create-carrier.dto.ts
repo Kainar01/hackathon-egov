@@ -1,6 +1,12 @@
-export interface CreateCarrierDto {
-  phone: string;
-  providerId: number;
-  firstName: string;
-  lastName: string;
+import { IsNumber, IsString } from 'class-validator';
+
+export class CreateCarrierDto {
+  @IsString()
+  phone!: string;
+  @IsNumber()
+  providerId!: number;
+  @IsString()
+  firstName!: string;
+  @IsString()
+  lastName!: string;
 }
