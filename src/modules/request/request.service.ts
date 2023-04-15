@@ -75,16 +75,19 @@ export class RequestService {
   }
 
   public async findForOperator(status: RequestStatus = RequestStatus.PENDING): Promise<OperatorRequest[]> {
-    const userRequests = await this.prisma.userRequest.findMany({
-      where: { status },
-      include: { request: true, requesterUser: true, delivery: { include: { trustedDeliveryUser: true } } },
+    const userRequests = await this.prisma.delivery.findMany({
+      where: { userRequest: { status } },
+      include: {
+        trustedDeliveryUser: true,
+        userRequest: { include: { request: true, requesterUser: true } },
+      },
     });
 
     // eslint-disable-next-line @typescript-eslint/typedef
-    return userRequests.map(({ requesterUser, delivery, ...userRequest }) => ({
-      userRequest,
-      trustedUser: delivery?.trustedDeliveryUser,
-      requesterUser,
+    return userRequests.map(({ userRequest, trustedDeliveryUser }) => ({
+      userRequest: _.omit(userRequest, 'requesterUser'),
+      trustedUser: trustedDeliveryUser,
+      requesterUser: userRequest.requesterUser,
     }));
   }
 
