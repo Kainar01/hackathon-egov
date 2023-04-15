@@ -1,4 +1,4 @@
-import { AuthUser } from '../src/modules/auth/auth.interface';
+import { UserPayload } from '@/modules/auth/interface/auth.interface';
 
 export declare global {
   type AnyObject = Record<string, unknown>;
@@ -8,6 +8,6 @@ export declare global {
       id: string;
     }
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface User extends AuthUser {}
+    interface User extends UserPayload {}
   }
 }
