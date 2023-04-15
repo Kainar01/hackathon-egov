@@ -33,12 +33,16 @@ export class UserService {
 
     const phone = data.isExists ? data.phoneNumber : null;
 
-    return this.create({
-      iin,
-      firstName: egovUser.firstName,
-      lastName: egovUser.lastName,
-      middleName: egovUser.middleName,
-      phone,
+    return this.prisma.user.upsert({
+      where: { iin },
+      update: {},
+      create: {
+        iin,
+        firstName: egovUser.firstName,
+        lastName: egovUser.lastName,
+        middleName: egovUser.middleName,
+        phone,
+      },
     });
   }
 }

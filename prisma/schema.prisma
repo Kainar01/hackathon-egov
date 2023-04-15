@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id                 Int            @id @default(autoincrement())
-  iin                String?
+  iin                String?        @unique(map: "User.iin_unique")
   password           String?
   firstName          String?
   middleName         String?
@@ -136,8 +136,8 @@ model Address {
   updatedAt   DateTime   @updatedAt
 }
 
-model Verification{
-  id           Int           @id @default(autoincrement())
-  phone        String
-  code         String
+model Verification {
+  id    Int    @id @default(autoincrement())
+  phone String
+  code  String
 }
