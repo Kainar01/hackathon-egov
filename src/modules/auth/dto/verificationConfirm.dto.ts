@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class VerificationConfirmDto{
-    @IsNotEmpty()
-    @IsString()
-    verificationCode!:string
+export class VerificationConfirmDto {
+  @IsNotEmpty()
+  @IsString()
+  verificationCode!: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    verificationId!:number
+  @IsNotEmpty()
+  @IsNumber()
+  verificationId!: number;
 }

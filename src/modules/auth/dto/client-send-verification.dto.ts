@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class clientSendVerificationDto{
-    @IsNotEmpty()
-    @IsString()
-    iin!:string
+export class clientSendVerificationDto {
+  @IsNotEmpty()
+  @IsString()
+  iin!: string;
 }

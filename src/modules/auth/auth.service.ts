@@ -43,17 +43,35 @@ export class AuthService {
     }
     const user = await this.prisma.user.findFirstOrThrow({ where: { phone: verification.phone }, include: { userRoles: true } });
 
-    const userRole = await this.prisma.userRole.findFirst({ where: { userId: user.id, OR: [{ role: 'admin' }, { role: 'operator' }] } });
-    if (!userRole) {
-      throw new BadRequestException('Нет доступа');
-    }
     const roles = <Role[]>_.map(user.userRoles, 'role');
-    await this.setAuthCookie(res, { userId: user.id, roles });
-    return { userId: user.id, roles, firstName: user.firstName, lastName: user.lastName, phone: user.phone, iin: user.iin };
+    const payload: UserPayload = { userId: user.id, roles };
+
+    if (roles.includes(Role.CARRIER)) {
+      const carrier = await this.prisma.carrier.findFirst({ where: { userId: user.id } });
+      payload.carrierId = carrier?.id;
+    }
+    if (roles.includes(Role.PROVIDER_OWNER)) {
+      const providerOwner = await this.prisma.carrier.findFirst({ where: { userId: user.id } });
+      payload.providerOwnerId = providerOwner?.id;
+    }
+
+    const accessToken = await this.setAuthCookie(res, payload);
+    return {
+      user: {
+        userId: user.id,
+        roles,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        iin: user.iin,
+        middleName: user.middleName,
+      },
+      token: accessToken,
+    };
   }
 
-  public async setAuthCookie(res: Response, user: UserPayload): Promise<void> {
-    const payload: JwtPayload = { sub: user.userId, roles: user.roles };
+  public async setAuthCookie(res: Response, { userId, ...user }: UserPayload): Promise<string> {
+    const payload: JwtPayload = { sub: userId, ...user };
     const accessToken = await this.jwt.signAsync(payload);
 
     const cookieOpts = {
@@ -63,7 +81,8 @@ export class AuthService {
     };
 
     res.cookie('access_token', accessToken, cookieOpts);
-    res.cookie('user_id', user.userId, cookieOpts);
+    res.cookie('user_id', userId, cookieOpts);
+    return accessToken;
   }
 
   public async clientSendVerification(iin: string): Promise<{ verificationId: number }> {
@@ -95,8 +114,20 @@ export class AuthService {
       throw new BadRequestException('Не существует юзера с данным телефоном номера');
     }
     const roles = <Role[]>_.map(user.userRoles, 'role');
-    await this.setAuthCookie(res, { userId: user.id, roles });
-    return { userId: user.id, roles, firstName: user.firstName, lastName: user.lastName, phone: user.phone, iin: user.iin };
+
+    const accessToken = await this.setAuthCookie(res, { userId: user.id, roles });
+    return {
+      user: {
+        userId: user.id,
+        roles,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        iin: user.iin,
+        middleName: user.middleName,
+      },
+      token: accessToken,
+    };
   }
 
   private generateCode(): string {
