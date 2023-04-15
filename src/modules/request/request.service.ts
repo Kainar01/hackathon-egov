@@ -35,13 +35,15 @@ export class RequestService {
     }
 
     const deliveries = await this.prisma.delivery.findMany({
-      where: { carrierId, userRequest: { status: RequestStatus.IN_PROGRESS }, carrierProviderId: carrier.providerId },
-      include: { userRequest: { include: { request: true } } },
+      where: { userRequest: { status: RequestStatus.IN_PROGRESS }, carrierProviderId: carrier.providerId },
+      include: { userRequest: { include: { request: true, requesterUser: true } } },
     });
 
     // eslint-disable-next-line @typescript-eslint/typedef
-    return deliveries.map(({ userRequest, ...delivery }) => ({
+    return deliveries.map(({ userRequest: { request, requesterUser, ...userRequest }, ...delivery }) => ({
       delivery,
+      request,
+      requesterUser,
       userRequest,
     }));
   }
@@ -110,7 +112,7 @@ export class RequestService {
       trustedUserId = createdTrustedUser.id;
     }
 
-    let addressId = address.id;
+    let addressId = address?.id;
 
     if (!addressId) {
       const newAddress = await this.prisma.address.create({
@@ -171,7 +173,7 @@ export class RequestService {
       include: { delivery: { include: { carrier: { include: { user: true } } } } },
     });
 
-    if (!userRequest || !userRequest.delivery || !userRequest.delivery.carrier) {
+    if (!userRequest || !userRequest.delivery) {
       throw new BadRequestException('Не валидная заявка');
     }
 
@@ -182,11 +184,6 @@ export class RequestService {
       phone: userRequest.delivery.phone,
       smsText: `Вы заказали доставку документов по заказу #${userRequest.requestId}. Покажите смс код курьеру чтобы вам выдали документы. Код: ${userRequest.delivery.clientCode}`,
     });
-
-    await this.egovApiService.sendSMS({
-      phone: userRequest.delivery.carrier.user.phone!,
-      smsText: `Вы приняли заказ #${userRequest.requestId}. Покажите смс код оператору чтобы вам выдали документы. Код: ${userRequest.delivery.clientCode}`,
-    });
   }
 
   public async assignCarrierForRequest(userRequestId: number, carrierId: number): Promise<void> {
@@ -196,6 +193,12 @@ export class RequestService {
         delivery: true,
       },
     });
+
+    const carrier = await this.prisma.carrier.findFirst({ where: { id: carrierId }, include: { user: true } });
+
+    if (!carrier) {
+      throw new BadRequestException('Не валидный курьер');
+    }
 
     if (!userRequest) {
       throw new BadRequestException('Не валидная заявка');
@@ -210,6 +213,11 @@ export class RequestService {
     }
 
     await this.deliveryService.assignDeliveryFor(carrierId, userRequest.delivery.id);
+
+    await this.egovApiService.sendSMS({
+      phone: carrier.user.phone!,
+      smsText: `Вы приняли заказ #${userRequest.requestId}. Покажите смс код оператору чтобы вам выдали документы. Код: ${userRequest.delivery.operatorCode}`,
+    });
   }
 
   public async handDocsToRequestCarrier(userRequestId: number, operatorCode: string): Promise<void> {

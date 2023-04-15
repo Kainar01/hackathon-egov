@@ -12,6 +12,8 @@ export interface ClientRequest {
 }
 
 export interface CarrierRequest {
-  userRequest: UserRequest & { request: Request };
+  userRequest: UserRequest;
   delivery: Delivery;
+  request: Request;
+  requesterUser: User;
 }

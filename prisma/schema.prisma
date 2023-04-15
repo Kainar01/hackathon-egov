@@ -127,9 +127,10 @@ model Address {
   houseNumber String
   apartment   String
   entrance    String
+  floor       String?
   block       String
   name        String
-  comments    String
+  comments    String?
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId      Int
   deliveries  Delivery[]

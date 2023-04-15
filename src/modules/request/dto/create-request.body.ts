@@ -1,9 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Decimal } from '@prisma/client/runtime';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-
-import { IsPhoneNumber } from '@/common/validators/is-phone-number.validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class AddressDto {
   @IsString()
@@ -36,15 +34,15 @@ export class AddressDto {
   @IsString()
   public comments!: string;
 
-  @IsString()
+  @IsNumber()
   public lat!: Decimal;
 
-  @IsString()
+  @IsNumber()
   public lng!: Decimal;
 }
 
 class TrustedUserDto {
-  @IsPhoneNumber('phone')
+  @IsString()
   public phone!: string;
 
   @IsString()
@@ -55,9 +53,10 @@ export class CreateRequestBody {
   @IsNumber()
   public requestId!: number;
 
-  @IsPhoneNumber('phone')
+  @IsString()
   public phone!: string;
 
+  @IsNotEmpty()
   @ValidateNested()
   @Type(() => AddressDto)
   public address!: AddressDto;

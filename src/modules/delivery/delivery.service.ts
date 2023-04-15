@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Delivery } from '@prisma/client';
+import { Address, Carrier, Delivery, Request } from '@prisma/client';
+import _ from 'lodash';
 
 import { PrismaService } from '@/prisma';
 
@@ -10,14 +11,34 @@ import { CreateDeliveryDto } from './dto/create-delivery.dto';
 export class DeliveryService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async findDelivery(deliveryId: number): Promise<Delivery> {
-    const delivery = await this.prisma.delivery.findFirst({ where: { id: deliveryId }, include: { carrier: true } });
+  public async findDelivery(
+    deliveryId: number,
+  ): Promise<{ delivery: Delivery & { address: Address }; carrier: Carrier | null; request: Request }> {
+    const delivery = await this.prisma.delivery.findFirst({
+      where: { id: deliveryId },
+      include: { carrier: true, address: true, userRequest: { include: { request: true } } },
+    });
 
     if (!delivery) {
       throw new BadRequestException('Доставка не существует');
     }
 
-    return delivery;
+    const { userRequest, carrier } = delivery;
+    return {
+      delivery: _.omit(delivery, 'userRequest', 'carrier'),
+      request: userRequest.request,
+      carrier,
+    };
+  }
+
+  public async findCarrier(deliveryId: number): Promise<Carrier> {
+    const carrier = await this.prisma.carrier.findFirst({ where: { id: deliveryId } });
+
+    if (!carrier) {
+      throw new BadRequestException('Курьер не существует');
+    }
+
+    return carrier;
   }
 
   public async create(data: CreateDeliveryDto): Promise<Delivery> {
@@ -59,7 +80,7 @@ export class DeliveryService {
   }
 
   public async completeDelivery(deliveryId: number, clientCode: string): Promise<void> {
-    const delivery = await this.prisma.delivery.findFirst({ where: { id: deliveryId, status: DeliveryStatus.ASSIGNED_CARRIER } });
+    const delivery = await this.prisma.delivery.findFirst({ where: { id: deliveryId, status: DeliveryStatus.ON_DELIVERY } });
 
     if (!delivery) {
       throw new BadRequestException('Не актуальный заказ');

@@ -1,4 +1,3 @@
-import { IsPhoneNumber } from '@/common/validators/is-phone-number.validator';
 import { IsString } from 'class-validator';
 
 export class CreateOperatorDto {
@@ -8,6 +7,6 @@ export class CreateOperatorDto {
   @IsString()
   lastName!: string;
 
-  @IsPhoneNumber('KZ')
+  @IsString()
   phone!: string;
 }

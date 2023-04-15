@@ -17,7 +17,7 @@ export class ServerConfig {
 
   public static readonly JWT_REFRESH_SECRET: string = get('JWT_REFRESH_SECRET').required().asString();
 
-  public static readonly JWT_ACCESS_TTL_IN_MINUTES: number = get('JWT_ACCESS_TTL_IN_MINUTES').default(15).required().asInt();
+  public static readonly JWT_ACCESS_TTL_IN_MINUTES: number = get('JWT_ACCESS_TTL_IN_MINUTES').default(1500).required().asInt();
 
   public static readonly JWT_SECRET_TTL_IN_DAYS: number = get('JWT_SECRET_TTL_IN_DAYS').default(7).required().asInt();
 

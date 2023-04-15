@@ -44,13 +44,15 @@ export class CarrierService {
       },
     });
 
-    await this.prisma.userRole.create({
-      data: {
+    await this.prisma.userRole.upsert({
+      where: { userId_role: { role: Role.CARRIER, userId: user.id } },
+      update: {},
+      create: {
         userId: user.id,
         role: Role.CARRIER,
       },
     });
 
-    return this.prisma.carrier.create({ data: { userId: user.id, providerId, lat: 0, lng: 0 } });
+    return this.prisma.carrier.upsert({ where: { userId: user.id }, update: {}, create: { userId: user.id, providerId, lat: 0, lng: 0 } });
   }
 }
