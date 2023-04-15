@@ -28,10 +28,17 @@ export class RequestService {
   }
 
   public async findForCarrier(carrierId: number): Promise<CarrierRequest[]> {
+    const carrier = await this.prisma.carrier.findFirst({ where: { id: carrierId } });
+
+    if (!carrier) {
+      throw new BadRequestException('Невалидный курьер');
+    }
+
     const deliveries = await this.prisma.delivery.findMany({
-      where: { carrierId, userRequest: { status: RequestStatus.IN_PROGRESS } },
+      where: { carrierId, userRequest: { status: RequestStatus.IN_PROGRESS }, carrierProviderId: carrier.providerId },
       include: { userRequest: { include: { request: true } } },
     });
+
     // eslint-disable-next-line @typescript-eslint/typedef
     return deliveries.map(({ userRequest, ...delivery }) => ({
       delivery,
@@ -74,7 +81,10 @@ export class RequestService {
     }));
   }
 
-  public async orderDeliveryForRequest(userId: number, { userRequestId, phone, address, trustedUser }: OrderDeliveryBody): Promise<void> {
+  public async orderDeliveryForRequest(
+    userId: number,
+    { carrierProviderId, userRequestId, phone, address, trustedUser }: OrderDeliveryBody,
+  ): Promise<void> {
     const user = await this.prisma.user.findFirst({ where: { id: userId } });
 
     if (!user) {
@@ -116,6 +126,7 @@ export class RequestService {
       acceptedByUserId: null,
       carrierId: null,
       phone: deliveryPhone,
+      carrierProviderId,
     });
   }
 
