@@ -55,6 +55,9 @@ export class OrderDeliveryBody {
   @IsNumber()
   public userRequestId!: number;
 
+  @IsNumber()
+  public carrierProviderId!: number;
+
   @IsPhoneNumber('phone')
   public phone!: string;
 
