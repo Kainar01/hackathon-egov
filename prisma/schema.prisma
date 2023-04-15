@@ -21,7 +21,6 @@ model User {
   trustedDeliveries  Delivery[]     @relation("trustedDeliveryUser")
   acceptedDeliveries Delivery[]     @relation("acceptedByUser")
   requests           UserRequest[]  @relation("requesterUser")
-  trustedRequests    UserRequest[]  @relation("trustedUser")
   carrier            Carrier?
   providerOwner      ProviderOwner?
   createdAt          DateTime       @default(now())
@@ -55,10 +54,6 @@ model UserRequest {
   requesterUserId Int
   request         Request   @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   requestId       Int
-  trustedUser     User?     @relation("trustedUser", fields: [trustedUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  trustedUserId   Int?
-  address         Address   @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  addressId       Int
   status          String
   delivery        Delivery?
   createdAt       DateTime  @default(now())
@@ -99,6 +94,7 @@ model ProviderOwner {
 
 model Delivery {
   id                    Int         @id @default(autoincrement())
+  phone                 String
   address               Address     @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   addressId             Int
   carrier               Carrier?    @relation(fields: [carrierId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -118,24 +114,23 @@ model Delivery {
 }
 
 model Address {
-  id           Int           @id @default(autoincrement())
-  region       String
-  city         String
-  street       String
-  houseNumber  String
-  apartment    String
-  entrance     String
-  block        String
-  name         String
-  comments     String
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       Int
-  deliveries   Delivery[]
-  userRequests UserRequest[]
-  lat          Decimal       @db.Decimal(8, 6)
-  lng          Decimal       @db.Decimal(9, 6)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id          Int        @id @default(autoincrement())
+  region      String
+  city        String
+  street      String
+  houseNumber String
+  apartment   String
+  entrance    String
+  block       String
+  name        String
+  comments    String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      Int
+  deliveries  Delivery[]
+  lat         Decimal    @db.Decimal(8, 6)
+  lng         Decimal    @db.Decimal(9, 6)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Verification{
