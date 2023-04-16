@@ -19,12 +19,13 @@ export class CarrierService {
   public async findActiveDeliveries(carrierId: number): Promise<CarrierDelivery[]> {
     const deliveries = await this.prisma.delivery.findMany({
       where: { AND: [{ carrierId }, { OR: [{ status: DeliveryStatus.ASSIGNED_CARRIER }, { status: DeliveryStatus.ON_DELIVERY }] }] },
-      include: { userRequest: { include: { request: true, requesterUser: true } } },
+      include: { userRequest: { include: { request: true, requesterUser: true } }, address: true },
     });
     // eslint-disable-next-line @typescript-eslint/typedef
-    return deliveries.map(({ userRequest, ...delivery }) => ({
-      request: userRequest.request,
-      requesterUser: userRequest.requesterUser,
+    return deliveries.map(({ userRequest: { request, requesterUser, ...userRequest }, ...delivery }) => ({
+      request,
+      requesterUser,
+      userRequest,
       delivery,
     }));
   }

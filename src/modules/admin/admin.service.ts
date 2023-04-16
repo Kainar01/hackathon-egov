@@ -30,7 +30,7 @@ export class AdminService {
   }
 
   public async findOperators(): Promise<User[]> {
-    const roles = await this.prisma.userRole.findMany({ where: { role: Role.ADMIN }, include: { user: true } });
+    const roles = await this.prisma.userRole.findMany({ where: { role: Role.OPERATOR }, include: { user: true } });
     return _.map(roles, 'user');
   }
 

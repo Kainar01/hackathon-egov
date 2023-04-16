@@ -1,7 +1,8 @@
-import { Delivery, Request, User } from '@prisma/client';
+import { Address, Delivery, Request, User, UserRequest } from '@prisma/client';
 
 export interface CarrierDelivery {
-  delivery: Delivery;
+  delivery: Delivery & { address: Address };
   request: Request;
+  userRequest: UserRequest;
   requesterUser: User;
 }

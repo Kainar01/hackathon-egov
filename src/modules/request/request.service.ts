@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Request, UserRequest } from '@prisma/client';
+import { Request, UserRequest, Carrier } from '@prisma/client';
 import _ from 'lodash';
 
 import { ServerConfig } from '@/config/server.config';
@@ -79,16 +79,22 @@ export class RequestService {
       where: { userRequest: { status } },
       include: {
         trustedDeliveryUser: true,
+        carrier: true,
         userRequest: { include: { request: true, requesterUser: true } },
       },
     });
 
+    return userRequests
     // eslint-disable-next-line @typescript-eslint/typedef
-    return userRequests.map(({ userRequest, trustedDeliveryUser }) => ({
-      userRequest: _.omit(userRequest, 'requesterUser'),
-      trustedUser: trustedDeliveryUser,
-      requesterUser: userRequest.requesterUser,
-    }));
+      .filter(({ carrier }) => carrier)
+      // eslint-disable-next-line @typescript-eslint/typedef
+      .map(({ userRequest, trustedDeliveryUser, carrier, ...delivery }) => ({
+        userRequest: _.omit(userRequest, 'requesterUser'),
+        trustedUser: trustedDeliveryUser,
+        requesterUser: userRequest.requesterUser,
+        delivery,
+        carrier: <Carrier>carrier,
+      }));
   }
 
   public async orderDeliveryForRequest(
@@ -187,6 +193,10 @@ export class RequestService {
       phone: userRequest.delivery.phone,
       smsText: `Вы заказали доставку документов по заказу #${userRequest.requestId}. Покажите смс код курьеру чтобы вам выдали документы. Код: ${userRequest.delivery.clientCode}`,
     });
+  }
+
+  public async assignCarrierForRequests(userRequestIds: number[], carrierId: number): Promise<void> {
+    await Promise.all(_.uniq(userRequestIds).map(async (id: number) => this.assignCarrierForRequest(id, carrierId)));
   }
 
   public async assignCarrierForRequest(userRequestId: number, carrierId: number): Promise<void> {

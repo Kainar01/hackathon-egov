@@ -2,7 +2,9 @@ import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { Carrier } from '@prisma/client';
 
 import { UseAuth } from '@/common/decorators/auth.decorator';
+import { ReqUser } from '@/common/decorators/req-user.decorator';
 
+import { UserPayload } from '../auth/interface/auth.interface';
 import { Role } from '../user/user.enum';
 import { CarrierDelivery } from './carrier.interface';
 import { CarrierService } from './carrier.service';
@@ -21,15 +23,13 @@ export class CarrierController {
 
   @UseAuth(Role.CARRIER)
   @Put('')
-  public async updateLocation(@Body() data: UpdateCarrierLocationDto): Promise<void> {
-    // TODO: CARRIER ID
-    return this.carrierService.updateCarrierLocation(2, data.lat, data.lng);
+  public async updateLocation(@ReqUser() user: UserPayload, @Body() data: UpdateCarrierLocationDto): Promise<void> {
+    return this.carrierService.updateCarrierLocation(user.carrierId!, data.lat, data.lng);
   }
 
   @UseAuth(Role.CARRIER)
   @Get('deliveries')
-  public async deliveries(): Promise<CarrierDelivery[]> {
-    // TODO: CARRIER ID
-    return this.carrierService.findActiveDeliveries(2);
+  public async deliveries(@ReqUser() user: UserPayload): Promise<CarrierDelivery[]> {
+    return this.carrierService.findActiveDeliveries(user.carrierId!);
   }
 }

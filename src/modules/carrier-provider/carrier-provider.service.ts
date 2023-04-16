@@ -11,6 +11,10 @@ import { CreateProviderDto } from './dto/create-provider.dto';
 export class CarrierProviderService {
   constructor(private readonly prisma: PrismaService, private readonly egovService: EgovApiService) {}
 
+  public async getProviders(): Promise<CarrierProvider[]> {
+    return this.prisma.carrierProvider.findMany();
+  }
+
   public async create({ phone, name }: CreateProviderDto): Promise<CarrierProvider> {
     const user = await this.prisma.user.create({
       data: {

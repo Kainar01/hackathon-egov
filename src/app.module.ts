@@ -9,6 +9,7 @@ import { SentryConfig } from './config/sentry.config';
 import { ServerConfig } from './config/server.config';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CarrierProviderModule } from './modules/carrier-provider/carrier-provider.module';
 import { CarrierModule } from './modules/carrier/carrier.module';
 import { DeliveryModule } from './modules/delivery/delivery.module';
 import { EgovApiModule } from './modules/egov-api/egov-api.module';
@@ -31,6 +32,7 @@ import { UserModule } from './modules/user/user.module';
     CarrierModule,
     DeliveryModule,
     RequestModule,
+    CarrierProviderModule,
     // https://docs.nestjs.com/recipes/router-module
     RouterModule.register([]),
   ],

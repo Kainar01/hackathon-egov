@@ -6,6 +6,7 @@ import { ReqUser } from '@/common/decorators/req-user.decorator';
 
 import { UserPayload } from '../auth/interface/auth.interface';
 import { Role } from '../user/user.enum';
+import { AcceptOrdersBody } from './dto/accept-orders.body';
 import { HandDocsToClientBody } from './dto/hand-docs-to-client.body';
 import { HandDocsToDeliveryBody } from './dto/hand-docs-to-delivery.body';
 import { OrderDeliveryBody } from './dto/order-delivery.body';
@@ -69,6 +70,12 @@ export class RequestController {
   @Post('accept-delivery/:userRequestId')
   public async acceptDeliveryOrder(@Param('userRequestId') userRequestId: number, @ReqUser() user: UserPayload): Promise<void> {
     return this.requestService.assignCarrierForRequest(userRequestId, user.carrierId!);
+  }
+
+  @UseAuth(Role.CARRIER)
+  @Post('accept-delivery/create/bulk')
+  public async acceptDeliveryOrders(@Body() { userRequestIds }: AcceptOrdersBody, @ReqUser() user: UserPayload): Promise<void> {
+    return this.requestService.assignCarrierForRequests(userRequestIds, user.carrierId!);
   }
 
   @UseAuth(Role.OPERATOR)

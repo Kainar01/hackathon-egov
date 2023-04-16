@@ -1,9 +1,11 @@
-import { Delivery, Request, User, UserRequest } from '@prisma/client';
+import { Carrier, Delivery, Request, User, UserRequest } from '@prisma/client';
 
 export interface OperatorRequest {
   userRequest: UserRequest & { request: Request };
   requesterUser: User;
   trustedUser?: User | null;
+  delivery: Delivery;
+  carrier: Carrier;
 }
 
 export interface ClientRequest {
