@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Carrier } from '@prisma/client';
 
 import { UseAuth } from '@/common/decorators/auth.decorator';
@@ -6,7 +6,7 @@ import { ReqUser } from '@/common/decorators/req-user.decorator';
 
 import { UserPayload } from '../auth/interface/auth.interface';
 import { Role } from '../user/user.enum';
-import { CarrierDelivery } from './carrier.interface';
+import { CarrierDelivery, CarrierWithDeliveries } from './carrier.interface';
 import { CarrierService } from './carrier.service';
 import { CreateCarrierDto } from './dto/create-carrier.dto';
 import { UpdateCarrierLocationDto } from './dto/update-carrier-location.dto';
@@ -31,5 +31,14 @@ export class CarrierController {
   @Get('deliveries')
   public async deliveries(@ReqUser() user: UserPayload): Promise<CarrierDelivery[]> {
     return this.carrierService.findActiveDeliveries(user.carrierId!);
+  }
+
+  @Get('deliveries/:carrierId')
+  public async deliveriesByCarrier(@Param('carrierId') carrierId: number): Promise<CarrierWithDeliveries> {
+    const carrier = await this.carrierService.findOne(carrierId);
+
+    const deliveries = await this.carrierService.findActiveDeliveries(carrier.id);
+
+    return { deliveries, carrier };
   }
 }

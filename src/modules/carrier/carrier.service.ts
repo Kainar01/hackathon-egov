@@ -12,6 +12,10 @@ import { CreateCarrierDto } from './dto/create-carrier.dto';
 export class CarrierService {
   constructor(private readonly prisma: PrismaService) {}
 
+  public async findOne(carrierId: number): Promise<Carrier> {
+    return this.prisma.carrier.findFirstOrThrow({ where: { id: carrierId } });
+  }
+
   public async updateCarrierLocation(carrierId: number, lat: number, lng: number): Promise<void> {
     await this.prisma.carrier.update({ where: { id: carrierId }, data: { lat, lng } });
   }

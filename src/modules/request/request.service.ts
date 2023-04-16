@@ -86,7 +86,7 @@ export class RequestService {
 
     return userRequests
     // eslint-disable-next-line @typescript-eslint/typedef
-      .filter(({ carrier }) => carrier)
+      .filter(({ carrier }) => status !== RequestStatus.IN_PROGRESS || carrier)
       // eslint-disable-next-line @typescript-eslint/typedef
       .map(({ userRequest, trustedDeliveryUser, carrier, ...delivery }) => ({
         userRequest: _.omit(userRequest, 'requesterUser'),
