@@ -10,6 +10,7 @@ import { PrismaService } from '@/prisma';
 import { EgovApiService } from '../egov-api/egov-api.service';
 import { Role } from '../user/user.enum';
 import { UserService } from '../user/user.service';
+import { clientSendVerificationDto } from './dto/client-send-verification.dto';
 import type { VerificationConfirmDto } from './dto/verificationConfirm.dto';
 import type { VerificationSendDto } from './dto/verificationSend.dto';
 import type { JwtPayload, UserPayload } from './interface/auth.interface';
@@ -117,6 +118,27 @@ export class AuthService {
     }
     const roles = <Role[]>_.map(user.userRoles, 'role');
 
+    const accessToken = await this.setAuthCookie(res, { userId: user.id, roles });
+    return {
+      user: {
+        userId: user.id,
+        roles,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        iin: user.iin,
+        middleName: user.middleName,
+      },
+      token: accessToken,
+    };
+  }
+
+  public async linkVerification({ iin }: clientSendVerificationDto, res: Response): Promise<LoginResponse> {
+    const user = await this.prisma.user.findFirst({ where: { iin }, include: { userRoles: true } });
+    if (!user) {
+      throw new BadRequestException('Юзер с таким ИИН не найден');
+    }
+    const roles = <Role[]>_.map(user.userRoles, 'role');
     const accessToken = await this.setAuthCookie(res, { userId: user.id, roles });
     return {
       user: {

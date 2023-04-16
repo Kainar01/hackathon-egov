@@ -35,4 +35,12 @@ export class AuthController {
   ): Promise<LoginResponse> {
     return this.authService.clientConfirmVerification(res, data);
   }
+
+  @Post('/link/verification')
+  public async linkVerification(
+    @Body() data: clientSendVerificationDto,
+      @Res({ passthrough: true }) res: Response,
+  ): Promise<LoginResponse> {
+    return this.authService.linkVerification(data, res);
+  }
 }
