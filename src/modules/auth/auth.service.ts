@@ -86,8 +86,10 @@ export class AuthService {
   }
 
   public async clientSendVerification(iin: string): Promise<{ verificationId: number }> {
-    const { phone } = await this.egovApi.getPhone(iin);
-
+    const { phone, isExists } = await this.egovApi.getPhone(iin);
+    if (!isExists) {
+      throw new BadRequestException('К этому ИИН-у не привязан номер');
+    }
     const code = this.generateCode();
     await this.userService.createByIIN(iin);
     const verification = await this.prisma.verification.create({
